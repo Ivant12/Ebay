@@ -1,0 +1,53 @@
+CREATE DATABASE ebay;
+USE ebay;
+
+CREATE TABLE Cliente (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    ciudad VARCHAR(50),
+    saldo DECIMAL(8, 2)
+);
+
+CREATE TABLE Productos (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    precio DECIMAL(8, 2),
+    existencias INT
+);
+
+CREATE TABLE Subastas (
+    id INT PRIMARY KEY,
+    precioActual DECIMAL(10, 2),
+    tiempoRestante VARCHAR(50),
+    numPujas INT,
+    nombreProducto VARCHAR(50)
+);
+
+CREATE TABLE OfertasDestacadas (
+    id INT PRIMARY KEY,
+    porcentajeDescuento DECIMAL(5, 2),
+    fechaInicio DATE,
+    fechaFin DATE,
+    numSubasta INT,
+    FOREIGN KEY (numSubasta) REFERENCES Subastas(codigoSubasta)
+);
+
+INSERT INTO Cliente (CodigoCliente, Nombre, Ciudad, Saldo) VALUES
+(1, 'Pedro', 'Sevilla', 1000.00),
+(2, 'Juan', 'Córdoba', 1500.00),
+(3, 'Miguel', 'Granada', 2000.00);
+
+INSERT INTO Productos (CodigoProducto, Nombre, Precio, Existencias) VALUES
+(101, 'Martillo', 20.00, 100),
+(102, 'Cortacesped', 75.00, 75),
+(103, 'Citroen c4', 20100.00, 50);
+
+INSERT INTO Subastas (CodigoSubasta, PrecioActual, TiempoRestante, NumPujas, NombreProducto) VALUES
+(501, 150.00, '2 horas', 5, 'Gafas'),
+(502, 200.00, '1 hora', 3, 'Raton'),
+(503, 100.00, '4 horas', 7, 'Teclado');
+
+INSERT INTO OfertasDestacadas (ID, PorcentajeDescuento, FechaInicio, FechaFin, NumSubasta) VALUES
+(1, 10, '2024-03-10', '2024-03-15', 501),
+(2, 15, '2024-03-12', '2024-03-17', 503),
+(3, 20, '2024-03-11', '2024-03-16', 502);
